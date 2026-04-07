@@ -43,6 +43,7 @@ const CategoryPage = () => {
           <Breadcrumbs items={[{ label: category.name }]} />
           <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground mt-2">{category.name}</h1>
           <p className="text-muted-foreground text-sm mt-1 max-w-lg">{category.description}</p>
+          <span className="text-xs text-muted-foreground mt-1">{allPosts.length} {allPosts.length === 1 ? 'post' : 'posts'}</span>
         </div>
       </div>
 

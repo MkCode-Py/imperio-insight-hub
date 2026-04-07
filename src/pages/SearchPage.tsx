@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import { useState, useMemo } from 'react';
 import { Search } from 'lucide-react';
 import { Header } from '@/components/layout/Header';
@@ -74,7 +74,19 @@ const SearchPage = () => {
         </div>
 
         {results.length === 0 && (
-          <p className="text-center text-muted-foreground py-16">Nenhum resultado encontrado.</p>
+          <div className="text-center py-16">
+            <p className="text-muted-foreground mb-4">Nenhum resultado encontrado.</p>
+            <p className="text-sm text-muted-foreground mb-4">Tente explorar nossas categorias:</p>
+            <div className="flex flex-wrap justify-center gap-2">
+              {categories.map((cat) => (
+                <Link key={cat.id} to={`/categoria/${cat.slug}`}>
+                  <Badge variant="outline" className="cursor-pointer hover:bg-accent/10 hover:text-accent transition-colors">
+                    {cat.name}
+                  </Badge>
+                </Link>
+              ))}
+            </div>
+          </div>
         )}
       </main>
 

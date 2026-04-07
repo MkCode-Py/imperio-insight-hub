@@ -12,6 +12,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import PostPage from "./pages/PostPage";
 import CategoryPage from "./pages/CategoryPage";
+import TagPage from "./pages/TagPage";
 import SearchPage from "./pages/SearchPage";
 import MostViewedPage from "./pages/MostViewedPage";
 import GuidesPage from "./pages/GuidesPage";
@@ -41,6 +42,7 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/post/:slug" element={<PostPage />} />
               <Route path="/categoria/:slug" element={<CategoryPage />} />
+              <Route path="/tag/:slug" element={<TagPage />} />
               <Route path="/busca" element={<SearchPage />} />
               <Route path="/mais-vistos" element={<MostViewedPage />} />
               <Route path="/guias" element={<GuidesPage />} />
