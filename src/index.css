@@ -129,3 +129,100 @@
     @apply bg-card/80 backdrop-blur-lg border border-border/50;
   }
 }
+
+/* Editorial prose styles for post content */
+.imperio-prose {
+  @apply text-foreground leading-relaxed;
+}
+
+.imperio-prose h2 {
+  @apply text-xl sm:text-2xl font-bold text-foreground mt-10 mb-4 pb-2 border-b border-border;
+}
+
+.imperio-prose h3 {
+  @apply text-lg font-semibold text-foreground mt-8 mb-3;
+}
+
+.imperio-prose p {
+  @apply text-base text-foreground/90 mb-4 leading-7;
+}
+
+.imperio-prose ul, .imperio-prose ol {
+  @apply mb-4 pl-6 space-y-1;
+}
+
+.imperio-prose ul {
+  @apply list-disc;
+}
+
+.imperio-prose ol {
+  @apply list-decimal;
+}
+
+.imperio-prose li {
+  @apply text-foreground/90 leading-7;
+}
+
+.imperio-prose strong {
+  @apply font-semibold text-foreground;
+}
+
+.imperio-prose a {
+  @apply text-accent underline underline-offset-2 hover:text-accent/80 transition-colors;
+}
+
+.imperio-prose table {
+  @apply w-full border-collapse rounded-lg overflow-hidden my-6 text-sm;
+}
+
+.imperio-prose thead {
+  @apply bg-muted;
+}
+
+.imperio-prose th {
+  @apply text-left px-4 py-3 font-semibold text-foreground border-b border-border;
+}
+
+.imperio-prose td {
+  @apply px-4 py-3 border-b border-border text-foreground/80;
+}
+
+.imperio-prose tr:last-child td {
+  @apply border-b-0;
+}
+
+.imperio-prose .callout {
+  @apply my-6 p-4 rounded-xl border-l-4;
+}
+
+.imperio-prose .callout.info {
+  @apply bg-accent/5 border-accent text-foreground;
+}
+
+.imperio-prose .callout.warning {
+  @apply bg-amber-500/5 border-amber-500 text-foreground;
+}
+
+.imperio-prose .callout.danger {
+  @apply bg-destructive/5 border-destructive text-foreground;
+}
+
+.imperio-prose pre {
+  @apply my-6 p-4 rounded-xl bg-muted overflow-x-auto text-sm;
+}
+
+.imperio-prose code {
+  @apply font-mono text-sm bg-muted px-1.5 py-0.5 rounded;
+}
+
+.imperio-prose pre code {
+  @apply bg-transparent p-0;
+}
+
+.imperio-prose blockquote {
+  @apply my-6 pl-4 border-l-4 border-accent/30 italic text-muted-foreground;
+}
+
+.imperio-prose img {
+  @apply rounded-xl my-6 w-full;
+}
