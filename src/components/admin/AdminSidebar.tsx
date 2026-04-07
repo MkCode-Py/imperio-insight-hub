@@ -3,7 +3,7 @@ import { LayoutDashboard, FileText, FolderOpen, Tag, Image, BarChart3, Search, S
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
 
 const navItems = [
@@ -28,24 +28,26 @@ function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
 
   return (
     <div className="flex flex-col h-full">
-      <nav className="flex-1 overflow-y-auto p-2 space-y-1">
-        {navItems.map((item) => (
-          <Link
-            key={item.to}
-            to={item.to}
-            onClick={onNavigate}
-            className={cn(
-              'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors',
-              isActive(item.to)
-                ? 'bg-accent/10 text-accent'
-                : 'text-muted-foreground hover:text-foreground hover:bg-muted'
-            )}
-          >
-            <item.icon className="h-4 w-4 shrink-0" />
-            <span>{item.label}</span>
-          </Link>
-        ))}
-      </nav>
+      <ScrollArea className="flex-1">
+        <nav className="p-2 space-y-1">
+          {navItems.map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              onClick={onNavigate}
+              className={cn(
+                'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors',
+                isActive(item.to)
+                  ? 'bg-accent/10 text-accent'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+              )}
+            >
+              <item.icon className="h-4 w-4 shrink-0" />
+              <span>{item.label}</span>
+            </Link>
+          ))}
+        </nav>
+      </ScrollArea>
 
       <div className="p-3 border-t border-border shrink-0 space-y-2">
         {user && (
@@ -66,24 +68,30 @@ function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
   );
 }
 
-// Desktop sidebar
+function BrandLogo({ size = 'md' }: { size?: 'sm' | 'md' }) {
+  const s = size === 'sm' ? 'h-7 w-7' : 'h-8 w-8';
+  const ts = size === 'sm' ? 'text-[10px]' : 'text-xs';
+  return (
+    <div className="flex items-center gap-2">
+      <div className={`${s} rounded-lg imperio-gradient flex items-center justify-center`}>
+        <span className={`${ts} font-black text-primary-foreground`}>IP</span>
+      </div>
+      <span className="font-bold text-sm text-foreground">Admin</span>
+    </div>
+  );
+}
+
 function DesktopSidebar() {
   return (
     <aside className="hidden md:flex h-screen sticky top-0 bg-card border-r border-border flex-col w-60">
       <div className="h-14 flex items-center px-3 border-b border-border shrink-0">
-        <Link to="/admin" className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded-lg imperio-gradient flex items-center justify-center">
-            <span className="text-xs font-black text-primary-foreground">IP</span>
-          </div>
-          <span className="font-bold text-sm text-foreground">Admin</span>
-        </Link>
+        <Link to="/admin"><BrandLogo /></Link>
       </div>
       <SidebarNav />
     </aside>
   );
 }
 
-// Mobile header + sheet
 function MobileHeader({ open, onOpenChange }: { open: boolean; onOpenChange: (v: boolean) => void }) {
   return (
     <>
@@ -91,18 +99,14 @@ function MobileHeader({ open, onOpenChange }: { open: boolean; onOpenChange: (v:
         <Button variant="ghost" size="icon" className="h-9 w-9" onClick={() => onOpenChange(true)}>
           <Menu className="h-5 w-5" />
         </Button>
-        <Link to="/admin" className="flex items-center gap-2">
-          <div className="h-7 w-7 rounded-lg imperio-gradient flex items-center justify-center">
-            <span className="text-[10px] font-black text-primary-foreground">IP</span>
-          </div>
-          <span className="font-bold text-sm text-foreground">Admin</span>
-        </Link>
+        <Link to="/admin"><BrandLogo size="sm" /></Link>
       </header>
 
       <Sheet open={open} onOpenChange={onOpenChange}>
         <SheetContent side="left" className="w-64 p-0">
-          <SheetHeader className="h-14 flex items-center px-4 border-b border-border">
-            <SheetTitle className="text-sm font-bold">Império Pharma</SheetTitle>
+          <SheetHeader className="h-14 flex items-center justify-center px-4 border-b border-border">
+            <SheetTitle className="sr-only">Menu de navegação</SheetTitle>
+            <BrandLogo />
           </SheetHeader>
           <SidebarNav onNavigate={() => onOpenChange(false)} />
         </SheetContent>

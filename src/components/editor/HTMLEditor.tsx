@@ -26,9 +26,9 @@ export function HTMLEditor({ value, onChange }: HTMLEditorProps) {
 
   return (
     <div className="space-y-2">
-      <div className="flex flex-wrap gap-1 p-2 bg-muted rounded-lg border border-border">
+      <div className="flex gap-1 p-2 bg-muted rounded-lg border border-border overflow-x-auto scrollbar-thin">
         {snippets.map((s) => (
-          <Button key={s.label} variant="ghost" size="sm" className="h-8 text-xs gap-1" onClick={() => insertSnippet(s.html)}>
+          <Button key={s.label} variant="ghost" size="sm" className="h-8 text-xs gap-1 shrink-0" onClick={() => insertSnippet(s.html)}>
             <s.icon className="h-3.5 w-3.5" />
             {s.label}
           </Button>
@@ -37,7 +37,7 @@ export function HTMLEditor({ value, onChange }: HTMLEditorProps) {
       <Textarea
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="min-h-[400px] font-mono text-sm leading-relaxed"
+        className="min-h-[300px] sm:min-h-[400px] font-mono text-sm leading-relaxed"
         placeholder="Cole ou escreva o HTML do post aqui..."
       />
     </div>
