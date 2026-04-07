@@ -51,23 +51,23 @@
   }
 
   .dark {
-    --background: 222 47% 11%;
-    --foreground: 214 32% 91%;
+    --background: 222 47% 8%;
+    --foreground: 210 40% 96%;
 
-    --card: 217 33% 17%;
-    --card-foreground: 214 32% 91%;
+    --card: 220 40% 13%;
+    --card-foreground: 210 40% 96%;
 
-    --popover: 217 33% 17%;
-    --popover-foreground: 214 32% 91%;
+    --popover: 220 40% 13%;
+    --popover-foreground: 210 40% 96%;
 
     --primary: 217 91% 53%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 214 32% 91%;
+    --secondary: 220 35% 16%;
+    --secondary-foreground: 210 40% 90%;
 
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 220 30% 18%;
+    --muted-foreground: 215 20% 60%;
 
     --accent: 217 91% 60%;
     --accent-foreground: 0 0% 100%;
@@ -75,22 +75,22 @@
     --destructive: 0 62% 31%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 217 33% 22%;
-    --input: 217 33% 22%;
+    --border: 220 30% 20%;
+    --input: 220 30% 16%;
     --ring: 217 91% 53%;
 
-    --sidebar-background: 222 47% 11%;
-    --sidebar-foreground: 214 32% 91%;
+    --sidebar-background: 222 47% 6%;
+    --sidebar-foreground: 210 40% 96%;
     --sidebar-primary: 217 91% 53%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 217 33% 17%;
-    --sidebar-accent-foreground: 214 32% 91%;
-    --sidebar-border: 217 33% 22%;
+    --sidebar-accent: 220 35% 16%;
+    --sidebar-accent-foreground: 210 40% 90%;
+    --sidebar-border: 220 30% 15%;
     --sidebar-ring: 217 91% 53%;
 
     --imperio-gold: 45 93% 47%;
     --imperio-red: 0 62% 41%;
-    --imperio-surface: 217 33% 14%;
+    --imperio-surface: 220 35% 11%;
   }
 }
 

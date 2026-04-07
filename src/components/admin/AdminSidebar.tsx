@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { LayoutDashboard, FileText, FolderOpen, Tag, Image, BarChart3, Search, Settings, LogOut, Menu } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
@@ -31,20 +32,21 @@ function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
       <ScrollArea className="flex-1">
         <nav className="p-2 space-y-1">
           {navItems.map((item) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              onClick={onNavigate}
-              className={cn(
-                'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors',
-                isActive(item.to)
-                  ? 'bg-accent/10 text-accent'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
-              )}
-            >
-              <item.icon className="h-4 w-4 shrink-0" />
-              <span>{item.label}</span>
-            </Link>
+            <motion.div key={item.to} whileTap={{ scale: 0.97 }}>
+              <Link
+                to={item.to}
+                onClick={onNavigate}
+                className={cn(
+                  'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors',
+                  isActive(item.to)
+                    ? 'bg-accent/10 text-accent'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                )}
+              >
+                <item.icon className="h-4 w-4 shrink-0" />
+                <span>{item.label}</span>
+              </Link>
+            </motion.div>
           ))}
         </nav>
       </ScrollArea>
@@ -83,7 +85,7 @@ function BrandLogo({ size = 'md' }: { size?: 'sm' | 'md' }) {
 
 function DesktopSidebar() {
   return (
-    <aside className="hidden md:flex h-screen sticky top-0 bg-card border-r border-border flex-col w-60">
+    <aside className="hidden md:flex h-screen sticky top-0 bg-card dark:bg-sidebar-background border-r border-border flex-col w-60">
       <div className="h-14 flex items-center px-3 border-b border-border shrink-0">
         <Link to="/admin"><BrandLogo /></Link>
       </div>

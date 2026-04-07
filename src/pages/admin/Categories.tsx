@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Plus, Edit, Trash2, ChevronUp, ChevronDown } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -54,31 +55,40 @@ const Categories = () => {
 
       <div className="space-y-2">
         {categories.map((cat, i) => (
-          <Card key={cat.id} className="border-border">
-            <CardContent className="p-3 sm:p-4">
-              <div className="flex items-center gap-2 sm:gap-4">
-                <div className="flex flex-col gap-0.5 shrink-0">
-                  <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => moveUp(i)}><ChevronUp className="h-3 w-3" /></Button>
-                  <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => moveDown(i)}><ChevronDown className="h-3 w-3" /></Button>
-                </div>
-                <img src={cat.coverImage} alt={cat.name} className="w-10 h-10 sm:w-14 sm:h-14 rounded-lg object-cover shrink-0" />
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-1.5 flex-wrap">
-                    <p className="font-medium text-sm text-foreground">{cat.name}</p>
-                    {cat.highlighted && <Badge variant="outline" className="text-[10px] px-1">Destaque</Badge>}
-                    <Badge variant={cat.enabled ? 'default' : 'secondary'} className="text-[10px] px-1">{cat.enabled ? 'Ativo' : 'Inativo'}</Badge>
+          <motion.div
+            key={cat.id}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.25, delay: i * 0.04 }}
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <Card className="border-border dark:shadow-lg dark:shadow-black/10">
+              <CardContent className="p-3 sm:p-4">
+                <div className="flex items-center gap-2 sm:gap-4">
+                  <div className="flex flex-col gap-0.5 shrink-0">
+                    <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => moveUp(i)}><ChevronUp className="h-3 w-3" /></Button>
+                    <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => moveDown(i)}><ChevronDown className="h-3 w-3" /></Button>
                   </div>
-                  <p className="text-xs text-muted-foreground truncate mt-0.5">/{cat.slug}</p>
+                  <img src={cat.coverImage} alt={cat.name} className="w-10 h-10 sm:w-14 sm:h-14 rounded-lg object-cover shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <p className="font-medium text-sm text-foreground">{cat.name}</p>
+                      {cat.highlighted && <Badge variant="outline" className="text-[10px] px-1">Destaque</Badge>}
+                      <Badge variant={cat.enabled ? 'default' : 'secondary'} className="text-[10px] px-1">{cat.enabled ? 'Ativo' : 'Inativo'}</Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground truncate mt-0.5">/{cat.slug}</p>
+                  </div>
+                  <div className="flex gap-0.5 shrink-0">
+                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => openEdit(cat)}><Edit className="h-3.5 w-3.5" /></Button>
+                    <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive" onClick={() => { setCategories((p) => p.filter((c) => c.id !== cat.id)); toast.success('Excluída (mock)'); }}>
+                      <Trash2 className="h-3.5 w-3.5" />
+                    </Button>
+                  </div>
                 </div>
-                <div className="flex gap-0.5 shrink-0">
-                  <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => openEdit(cat)}><Edit className="h-3.5 w-3.5" /></Button>
-                  <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive" onClick={() => { setCategories((p) => p.filter((c) => c.id !== cat.id)); toast.success('Excluída (mock)'); }}>
-                    <Trash2 className="h-3.5 w-3.5" />
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </motion.div>
         ))}
       </div>
 
