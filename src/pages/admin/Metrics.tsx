@@ -7,9 +7,9 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const periodOptions = [
-  { label: '7 dias', value: 7 },
-  { label: '30 dias', value: 30 },
-  { label: '90 dias', value: 90 },
+  { label: '7d', value: 7 },
+  { label: '30d', value: 30 },
+  { label: '90d', value: 90 },
 ];
 
 const Metrics = () => {
@@ -18,10 +18,10 @@ const Metrics = () => {
   const topPosts = getMostViewedPosts(10);
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
         <div>
-          <h1 className="text-2xl font-bold text-foreground">Métricas</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-foreground">Métricas</h1>
           <p className="text-sm text-muted-foreground">Analytics detalhado do blog</p>
         </div>
         <div className="flex gap-1">
@@ -34,17 +34,17 @@ const Metrics = () => {
       </div>
 
       <DashboardCards cards={getMetricCards()} />
-      <ViewsChart data={chartData} title="Views por Dia (Período Selecionado)" />
+      <ViewsChart data={chartData} title="Views por Dia" />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <Card className="border-border">
           <CardHeader className="pb-2"><CardTitle className="text-base">Top 10 Posts</CardTitle></CardHeader>
-          <CardContent className="space-y-2">
+          <CardContent className="space-y-1">
             {topPosts.map((p, i) => (
-              <div key={p.id} className="flex items-center gap-3 p-2">
-                <span className="text-sm font-bold text-accent/30 w-6">{i + 1}</span>
-                <p className="text-sm flex-1 truncate">{p.title}</p>
-                <span className="text-sm font-medium text-muted-foreground">{formatViews(p.uniqueViews)}</span>
+              <div key={p.id} className="flex items-center gap-2 p-2">
+                <span className="text-sm font-bold text-accent/30 w-5 shrink-0">{i + 1}</span>
+                <p className="text-sm flex-1 truncate min-w-0">{p.title}</p>
+                <span className="text-xs font-medium text-muted-foreground shrink-0">{formatViews(p.uniqueViews)}</span>
               </div>
             ))}
           </CardContent>

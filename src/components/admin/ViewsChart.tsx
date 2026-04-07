@@ -8,8 +8,8 @@ export function ViewsChart({ data, title = 'Views por Dia' }: { data: DailyViews
       <CardHeader className="pb-2">
         <CardTitle className="text-base font-semibold">{title}</CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="h-64">
+      <CardContent className="px-2 sm:px-6">
+        <div className="h-48 sm:h-64">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={data}>
               <defs>
@@ -23,8 +23,8 @@ export function ViewsChart({ data, title = 'Views por Dia' }: { data: DailyViews
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(214, 32%, 91%)" />
-              <XAxis dataKey="date" tick={{ fontSize: 11 }} tickFormatter={(v) => v.slice(5)} />
-              <YAxis tick={{ fontSize: 11 }} />
+              <XAxis dataKey="date" tick={{ fontSize: 10 }} tickFormatter={(v) => v.slice(8)} />
+              <YAxis tick={{ fontSize: 10 }} width={30} />
               <Tooltip />
               <Area type="monotone" dataKey="views" stroke="hsl(217, 91%, 53%)" fillOpacity={1} fill="url(#colorViews)" name="Views" />
               <Area type="monotone" dataKey="uniqueViews" stroke="hsl(215, 60%, 26%)" fillOpacity={1} fill="url(#colorUnique)" name="Únicos" />

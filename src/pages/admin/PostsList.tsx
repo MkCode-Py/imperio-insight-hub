@@ -23,23 +23,23 @@ const PostsList = () => {
   }, [search, statusFilter]);
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
         <div>
-          <h1 className="text-2xl font-bold text-foreground">Posts</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-foreground">Posts</h1>
           <p className="text-sm text-muted-foreground">{mockPosts.length} posts no total</p>
         </div>
         <Link to="/admin/posts/new">
-          <Button size="sm" className="gap-2"><Plus className="h-4 w-4" /> Novo Post</Button>
+          <Button size="sm" className="gap-2 w-full sm:w-auto"><Plus className="h-4 w-4" /> Novo Post</Button>
         </Link>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-3">
-        <div className="relative flex-1 max-w-sm">
+      <div className="flex flex-col gap-3">
+        <div className="relative max-w-sm">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar posts..." className="pl-9" />
         </div>
-        <div className="flex gap-1">
+        <div className="flex gap-1 flex-wrap">
           {['all', 'published', 'draft', 'scheduled'].map((s) => (
             <Badge key={s} variant={statusFilter === s ? 'default' : 'outline'} className="cursor-pointer capitalize" onClick={() => setStatusFilter(s)}>
               {s === 'all' ? 'Todos' : s === 'published' ? 'Publicados' : s === 'draft' ? 'Rascunhos' : 'Agendados'}
