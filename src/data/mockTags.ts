@@ -19,4 +19,10 @@ export const mockTags: Tag[] = [
   { id: 'tag-performance', name: 'Performance', slug: 'performance' },
   { id: 'tag-saude', name: 'Saúde', slug: 'saude' },
   { id: 'tag-protocolo', name: 'Protocolo', slug: 'protocolo' },
+  { id: 'tag-primobolan', name: 'Primobolan', slug: 'primobolan' },
+  { id: 'tag-semaglutida', name: 'Semaglutida', slug: 'semaglutida' },
+  { id: 'tag-tb500', name: 'TB-500', slug: 'tb-500' },
+  { id: 'tag-melanotan', name: 'Melanotan II', slug: 'melanotan-ii' },
+  { id: 'tag-ipamorelin', name: 'Ipamorelin', slug: 'ipamorelin' },
+  { id: 'tag-recomposicao', name: 'Recomposição', slug: 'recomposicao' },
 ];
