@@ -1,4 +1,5 @@
 import { mockPosts } from '@/data/mockPosts';
+import { motion } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
 import { Check, AlertTriangle } from 'lucide-react';
 
@@ -14,7 +15,7 @@ const SEO = () => {
 
       {/* Mobile: cards */}
       <div className="md:hidden space-y-2">
-        {posts.map((post) => {
+        {posts.map((post, i) => {
           const hasTitle = !!post.seoTitle?.trim();
           const hasDesc = !!post.seoDescription?.trim();
           const complete = hasTitle && hasDesc;
@@ -22,7 +23,14 @@ const SEO = () => {
           const descLen = post.seoDescription?.length || 0;
 
           return (
-            <div key={post.id} className="p-3 rounded-xl border border-border bg-card space-y-2">
+            <motion.div
+              key={post.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.25, delay: i * 0.04 }}
+              whileTap={{ scale: 0.98 }}
+              className="p-3 rounded-xl border border-border bg-card dark:shadow-lg dark:shadow-black/10 space-y-2"
+            >
               <div className="flex items-start justify-between gap-2">
                 <p className="text-sm font-medium text-foreground line-clamp-2">{post.title}</p>
                 {complete ? (
@@ -39,13 +47,13 @@ const SEO = () => {
                 <p className="truncate">Title: {post.seoTitle || '—'} <span className={titleLen <= 60 ? 'text-emerald-500' : 'text-amber-500'}>({titleLen}/60)</span></p>
                 <p className="truncate">Desc: {post.seoDescription || '—'} <span className={descLen <= 160 ? 'text-emerald-500' : 'text-amber-500'}>({descLen}/160)</span></p>
               </div>
-            </div>
+            </motion.div>
           );
         })}
       </div>
 
       {/* Desktop: table */}
-      <div className="hidden md:block rounded-xl border border-border bg-card overflow-x-auto">
+      <div className="hidden md:block rounded-xl border border-border bg-card overflow-x-auto dark:shadow-lg dark:shadow-black/10">
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-border">
@@ -64,7 +72,7 @@ const SEO = () => {
               const descLen = post.seoDescription?.length || 0;
 
               return (
-                <tr key={post.id} className="border-b border-border last:border-0">
+                <tr key={post.id} className="border-b border-border last:border-0 transition-colors hover:bg-muted/50">
                   <td className="p-3"><p className="font-medium text-foreground truncate max-w-[200px]">{post.title}</p></td>
                   <td className="p-3">
                     <p className="text-muted-foreground truncate max-w-[200px]">{post.seoTitle || '—'}</p>

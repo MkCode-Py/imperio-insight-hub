@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Edit, Trash2, Copy, Eye, MoreVertical } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Post } from '@/types/blog';
 import { getCategory, formatViews, formatDate } from '@/lib/blog';
 import { Badge } from '@/components/ui/badge';
@@ -20,9 +21,15 @@ const statusLabels: Record<string, string> = {
   scheduled: 'Agendado',
 };
 
-function MobilePostCard({ post, onDelete }: { post: Post; onDelete?: (id: string) => void }) {
+function MobilePostCard({ post, onDelete, index }: { post: Post; onDelete?: (id: string) => void; index: number }) {
   return (
-    <div className="flex items-start gap-3 p-3 rounded-xl border border-border bg-card">
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.25, delay: index * 0.04 }}
+      whileTap={{ scale: 0.98 }}
+      className="flex items-start gap-3 p-3 rounded-xl border border-border bg-card dark:shadow-lg dark:shadow-black/10"
+    >
       <img src={post.coverImage} alt="" className="w-12 h-12 rounded-lg object-cover shrink-0" />
       <div className="flex-1 min-w-0">
         <p className="font-medium text-sm text-foreground line-clamp-2 leading-tight">{post.title}</p>
@@ -59,7 +66,7 @@ function MobilePostCard({ post, onDelete }: { post: Post; onDelete?: (id: string
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-    </div>
+    </motion.div>
   );
 }
 
@@ -68,13 +75,13 @@ export function PostTable({ posts, onDelete }: { posts: Post[]; onDelete?: (id: 
     <>
       {/* Mobile: cards */}
       <div className="md:hidden space-y-2">
-        {posts.map((post) => (
-          <MobilePostCard key={post.id} post={post} onDelete={onDelete} />
+        {posts.map((post, i) => (
+          <MobilePostCard key={post.id} post={post} onDelete={onDelete} index={i} />
         ))}
       </div>
 
       {/* Desktop: table */}
-      <div className="hidden md:block rounded-xl border border-border bg-card overflow-hidden">
+      <div className="hidden md:block rounded-xl border border-border bg-card overflow-hidden dark:shadow-lg dark:shadow-black/10">
         <Table>
           <TableHeader>
             <TableRow>
@@ -88,7 +95,7 @@ export function PostTable({ posts, onDelete }: { posts: Post[]; onDelete?: (id: 
           </TableHeader>
           <TableBody>
             {posts.map((post) => (
-              <TableRow key={post.id}>
+              <TableRow key={post.id} className="transition-colors hover:bg-muted/50">
                 <TableCell>
                   <div className="flex items-center gap-3">
                     <img src={post.coverImage} alt="" className="w-10 h-10 rounded-lg object-cover shrink-0" />
