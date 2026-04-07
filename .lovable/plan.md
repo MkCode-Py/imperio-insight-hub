@@ -1,189 +1,103 @@
 
 
-# Plano: Fases 2–5 Completas — Império Pharma Blog
+# Plano: Admin Mobile Responsivo Completo
 
-## Visão Geral
+## Problemas Identificados
 
-Implementar todas as páginas públicas restantes, sistema admin completo com login mock, dashboard de métricas, editor dual-mode, CRUD de categorias/tags, e polish final.
+1. **Sidebar fixa no mobile** — ocupa metade da tela (w-60), impossibilita visualização do conteúdo
+2. **Conteúdo cortado** — tabelas, cards e textos ultrapassam a viewport horizontal
+3. **Sem mecanismo mobile** — sidebar não tem modo overlay/sheet para mobile
+4. **PostTable com 6 colunas** — impossível renderizar em 390px, causa scroll horizontal
+5. **SEO table** — mesmos problemas de overflow
+6. **Dashboard header** — título + badges de período não cabem numa linha
+7. **PostsList header** — botão "Novo Post" + título apertados
+8. **Categories** — cards com imagem + botões + badges apertados
+9. **PostEditor** — grid de 3 colunas sem responsividade adequada no mobile (já usa xl, mas a sidebar rouba espaço)
 
----
+## Solução
 
-## Fase 2 — Páginas Públicas + View Counter
+### 1. AdminLayout + AdminSidebar — Arquitetura Mobile
 
-### Páginas
+**AdminSidebar.tsx** — Refatorar completamente:
+- No **desktop** (≥768px): sidebar fixa lateral como está hoje (sticky, colapsável)
+- No **mobile** (<768px): sidebar **escondida**, acessível via **Sheet** (overlay slide-in da esquerda)
+- Usar `useIsMobile()` hook existente
+- Adicionar botão hamburger no topo do conteúdo
+- Fechar sidebar ao clicar num link (mobile)
 
-1. **Post Individual** (`/post/:slug`)
-   - Layout editorial premium com cover image full-width
-   - Breadcrumbs, TOC lateral (gerado automaticamente dos headings do HTML)
-   - Blocos ricos renderizados (callout, warning, info, tabelas)
-   - Botão WhatsApp share, CTA para loja, author info
-   - Posts relacionados, navegação anterior/próximo
-   - View counter com hook `useViewCounter`
+**AdminLayout.tsx** — Adicionar:
+- Header mobile com hamburger trigger + título da seção
+- Garantir `overflow-x-hidden` e `w-full` no container principal
+- Padding ajustado para mobile (`p-3` em vez de `p-4`)
 
-2. **Categoria** (`/categoria/:slug`)
-   - Header com imagem da categoria, descrição
-   - Grid de posts filtráveis por tags e contentType
+### 2. PostTable — Layout Mobile com Cards
 
-3. **Busca** (`/busca?q=...`)
-   - Filtros: categoria, tags, contentType, ordenação (recentes, mais vistos)
-   - Resultados com PostCard horizontal
+Em vez de tabela no mobile, renderizar cada post como um **card compacto**:
+- Imagem pequena + título + status badge + views + data
+- Ações em menu dropdown (3 dots) em vez de botões lado a lado
+- Manter tabela no desktop (≥768px)
 
-4. **Mais Vistos** (`/mais-vistos`)
-   - Ranking numerado com PostCard horizontal
+### 3. SEO Table — Scroll Horizontal Controlado
 
-5. **Guias** (`/guias`)
-   - Grid filtrado por contentType === 'guide'
+- Wrapper com `overflow-x-auto` no container da tabela
+- Reduzir `min-w` das colunas
+- No mobile, mostrar apenas Post + Status, com expansão ao clicar
 
-6. **404 Premium**
-   - Design branded com CTA de retorno
+### 4. Dashboard — Ajustes Mobile
 
-### Hook: useViewCounter
-- `localStorage` key por slug para unique views
-- `sessionStorage` anti-refresh
-- Incrementa mock view count no estado local
+- Header: título e badges empilhados (`flex-col` no mobile)
+- Cards grid: já usa `grid-cols-2`, OK
+- Chart: reduzir altura para `h-48` no mobile
+- Top Posts/Categorias: stack vertical (já usa `lg:grid-cols-2`, OK)
 
----
+### 5. Categories — Cards Mobile
 
-## Fase 3 — Admin Login + Dashboard + Posts + Editor
+- Empilhar elementos verticalmente no card (imagem em cima, info abaixo)
+- Botões de reordenar + ações em linha compacta
+- Remover imagem grande no mobile ou reduzir
 
-### Auth Mock
-- `AuthContext` com estado de login
-- Senha fixa: `imperio@2026!`
-- `ProtectedRoute` wrapper
-- Documentação para migração Supabase Auth
+### 6. PostsList — Header Mobile
 
-### Página de Login (`/admin/login`)
-- Design premium, campo email + senha, validação
-- Feedback de erro em toast
+- Empilhar título + botão "Novo Post" em coluna no mobile
+- Busca e filtros empilhados (já faz isso com `flex-col sm:flex-row`)
 
-### Layout Admin (`AdminLayout`)
-- Sidebar com navegação: Dashboard, Posts, Categorias, Tags, Mídia, Métricas, SEO, Configurações
-- Header com user info, logout
-- Responsivo com sidebar colapsável
+### 7. Metrics, Media, Tags, Settings, PostEditor
 
-### Dashboard (`/admin`)
-- Cards de métricas: total views, unique views, total posts, categorias ativas
-- Gráfico de views por dia (Recharts — já instalado)
-- Top 5 posts por views
-- Distribuição por categoria
-- Filtros de período: hoje, 7 dias, 30 dias, total
-- Mock data em `src/data/mockMetrics.ts`
-
-### Lista de Posts (`/admin/posts`)
-- Tabela com título, status, categoria, views, data
-- Filtros por status, categoria, busca
-- Ações: editar, duplicar, excluir (mock)
-
-### Editor de Post (`/admin/posts/new`, `/admin/posts/:id`)
-- **Modo Visual**: Textarea rica com formatação (sem TipTap — usar contentEditable + toolbar simples ou textarea com markdown preview para evitar dependência pesada)
-- **Modo HTML/Código**: Textarea com syntax highlighting básico
-- **Preview**: Renderização em tempo real do HTML
-- Campos: título, slug (auto-gerado), subtitle, summary, cover image URL, categorias (multi-select), tags (multi-select), contentType, status, publishDate, featured, pinned, SEO fields, CTA
-- Salvar em estado local (mock)
-
-> **Nota sobre editor**: Em vez de TipTap (dependência pesada), usaremos um editor com textarea HTML + preview em tempo real + toolbar de snippets. Isso cobre o caso de uso principal (colar HTML gerado por AI) com excelência, e permite escrita manual com toolbar de inserção de blocos.
-
----
-
-## Fase 4 — CRUD Categorias/Tags + Mídia + Métricas + SEO + Config
-
-### Categorias (`/admin/categorias`)
-- Lista com drag-to-reorder (ou botões up/down)
-- Modal de criar/editar: nome, slug, descrição, imagem, enabled, highlighted
-- Excluir com confirmação
-
-### Tags (`/admin/tags`)
-- Lista simples, criar/editar/excluir inline
-
-### Mídia (`/admin/midia`)
-- Galeria mock de imagens (URLs de Unsplash)
-- Upload simulado, copiar URL
-
-### Métricas (`/admin/metricas`)
-- Dashboard analítico expandido
-- Views por período, top posts, categorias, fontes de tráfego simuladas
-- Gráficos com Recharts
-- Filtros de período funcionais
-
-### SEO (`/admin/seo`)
-- Tabela de todos os posts com campos SEO (seoTitle, seoDescription, metaImage)
-- Status de preenchimento (completo/incompleto)
-- Edição inline rápida
-
-### Configurações (`/admin/configuracoes`)
-- Informações do blog: nome, descrição, URL da loja
-- Informações do autor padrão
-- Mock — documentado para conexão real
-
----
-
-## Fase 5 — Polish Final
-
-- Transições e animações suaves
-- Responsividade completa verificada
-- Estilos editoriais para blocos ricos (callout, warning, info, FAQ)
-- CSS para conteúdo de post (prose-like typography)
-- Documentação de produção em `PRODUCTION_NOTES.md`
-
----
-
-## Arquivos a Criar (~30 arquivos)
-
-```text
-src/
-├── contexts/AuthContext.tsx
-├── hooks/useViewCounter.ts
-├── data/mockMetrics.ts
-├── pages/
-│   ├── PostPage.tsx
-│   ├── CategoryPage.tsx
-│   ├── SearchPage.tsx
-│   ├── MostViewedPage.tsx
-│   ├── GuidesPage.tsx
-│   ├── AdminLogin.tsx
-│   ├── admin/
-│   │   ├── Dashboard.tsx
-│   │   ├── PostsList.tsx
-│   │   ├── PostEditor.tsx
-│   │   ├── Categories.tsx
-│   │   ├── Tags.tsx
-│   │   ├── Media.tsx
-│   │   ├── Metrics.tsx
-│   │   ├── SEO.tsx
-│   │   └── Settings.tsx
-├── components/
-│   ├── blog/
-│   │   ├── ShareWhatsApp.tsx
-│   │   ├── TableOfContents.tsx
-│   │   ├── Breadcrumbs.tsx
-│   │   ├── RelatedPosts.tsx
-│   │   └── PostContent.tsx
-│   ├── admin/
-│   │   ├── AdminLayout.tsx
-│   │   ├── AdminSidebar.tsx
-│   │   ├── DashboardCards.tsx
-│   │   ├── ViewsChart.tsx
-│   │   ├── PostTable.tsx
-│   │   └── ProtectedRoute.tsx
-│   └── editor/
-│       ├── HTMLEditor.tsx
-│       └── EditorPreview.tsx
-PRODUCTION_NOTES.md
-```
+- Ajustes menores de padding e overflow
+- Media grid: `grid-cols-2` já está OK para mobile
 
 ## Arquivos a Modificar
-- `src/App.tsx` — todas as rotas novas
-- `src/pages/NotFound.tsx` — redesign premium
-- `src/index.css` — estilos de prose/editorial
 
----
+1. **`src/components/admin/AdminSidebar.tsx`** — Refatorar com Sheet para mobile
+2. **`src/components/admin/AdminLayout.tsx`** — Header mobile com hamburger
+3. **`src/components/admin/PostTable.tsx`** — Card layout no mobile
+4. **`src/pages/admin/Dashboard.tsx`** — Header responsivo
+5. **`src/pages/admin/PostsList.tsx`** — Header empilhado
+6. **`src/pages/admin/Categories.tsx`** — Cards responsivos
+7. **`src/pages/admin/SEO.tsx`** — Tabela com scroll controlado
+8. **`src/pages/admin/Metrics.tsx`** — Header empilhado
+9. **`src/components/admin/ViewsChart.tsx`** — Altura responsiva
 
-## Decisão Técnica: Editor
+## Padrão de Sidebar Mobile
 
-Usar **textarea HTML + preview + toolbar de snippets** em vez de TipTap. Razões:
-- Caso de uso principal é colar HTML de AI — textarea é perfeita
-- Toolbar insere snippets HTML (callout, tabela, heading, lista)
-- Preview renderiza em tempo real
-- Zero dependências adicionais
-- Fácil migrar para TipTap depois se necessário
+```text
+Mobile (<768px):
+┌──────────────────────┐
+│ ☰  Dashboard    [IP] │  ← Header fixo com hamburger
+├──────────────────────┤
+│                      │
+│   Conteúdo full      │
+│   width sem          │
+│   sidebar            │
+│                      │
+└──────────────────────┘
+
+Ao clicar ☰:
+┌─────────┬────────────┐
+│ Sheet   │            │
+│ overlay │  Conteúdo  │
+│ (nav)   │  (escuro)  │
+│         │            │
+└─────────┴────────────┘
+```
 
