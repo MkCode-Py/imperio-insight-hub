@@ -12,6 +12,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import PostPage from "./pages/PostPage";
 import CategoryPage from "./pages/CategoryPage";
+import TagPage from "./pages/TagPage";
 import SearchPage from "./pages/SearchPage";
 import MostViewedPage from "./pages/MostViewedPage";
 import GuidesPage from "./pages/GuidesPage";
