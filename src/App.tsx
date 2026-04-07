@@ -42,6 +42,7 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/post/:slug" element={<PostPage />} />
               <Route path="/categoria/:slug" element={<CategoryPage />} />
+              <Route path="/tag/:slug" element={<TagPage />} />
               <Route path="/busca" element={<SearchPage />} />
               <Route path="/mais-vistos" element={<MostViewedPage />} />
               <Route path="/guias" element={<GuidesPage />} />

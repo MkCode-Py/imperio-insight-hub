@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Clock, Eye, ArrowRight } from 'lucide-react';
 import { Post } from '@/types/blog';
-import { getCategory, formatDate, formatViews } from '@/lib/blog';
+import { getCategory, getTag, formatDate, formatViews } from '@/lib/blog';
 import { Badge } from '@/components/ui/badge';
 
 interface PostCardProps {
@@ -39,23 +39,40 @@ export function PostCard({ post, variant = 'default' }: PostCardProps) {
 
   if (variant === 'horizontal') {
     return (
-      <Link to={`/post/${post.slug}`} className="group flex flex-col sm:flex-row gap-4 imperio-card-hover rounded-xl overflow-hidden bg-card border border-border">
-        <img
-          src={post.coverImage}
-          alt={post.title}
-          className="w-full sm:w-48 h-40 sm:h-auto object-cover"
-          loading="lazy"
-        />
+      <div className="group flex flex-col sm:flex-row gap-4 rounded-xl overflow-hidden bg-card border border-border imperio-card-hover">
+        <Link to={`/post/${post.slug}`} className="w-full sm:w-48 h-40 sm:h-auto shrink-0">
+          <img
+            src={post.coverImage}
+            alt={post.title}
+            className="w-full h-full object-cover"
+            loading="lazy"
+          />
+        </Link>
         <div className="flex flex-col justify-center p-4 sm:py-4 sm:pr-4 sm:pl-0 min-w-0 flex-1">
           {primaryCategory && (
             <Badge variant="secondary" className="w-fit mb-2 text-xs">
               {primaryCategory.name}
             </Badge>
           )}
-          <h3 className="font-semibold text-foreground line-clamp-2 group-hover:text-accent transition-colors">
-            {post.title}
-          </h3>
+          <Link to={`/post/${post.slug}`}>
+            <h3 className="font-semibold text-foreground line-clamp-2 group-hover:text-accent transition-colors">
+              {post.title}
+            </h3>
+          </Link>
           <p className="text-sm text-muted-foreground line-clamp-2 mt-1">{post.summary}</p>
+          <div className="flex flex-wrap gap-1.5 mt-2">
+            {post.tags.slice(0, 3).map((tagId) => {
+              const tag = getTag(tagId);
+              if (!tag) return null;
+              return (
+                <Link key={tag.id} to={`/tag/${tag.slug}`} onClick={(e) => e.stopPropagation()}>
+                  <Badge variant="outline" className="text-[10px] px-1.5 py-0 hover:bg-accent/10 hover:text-accent transition-colors">
+                    {tag.name}
+                  </Badge>
+                </Link>
+              );
+            })}
+          </div>
           <div className="flex items-center gap-3 mt-3 text-xs text-muted-foreground">
             <span>{formatDate(post.publishDate)}</span>
             <span>·</span>
@@ -64,7 +81,7 @@ export function PostCard({ post, variant = 'default' }: PostCardProps) {
             <span className="flex items-center gap-1"><Eye className="h-3 w-3" />{formatViews(post.uniqueViews)}</span>
           </div>
         </div>
-      </Link>
+      </div>
     );
   }
 
@@ -102,8 +119,8 @@ export function PostCard({ post, variant = 'default' }: PostCardProps) {
 
   // Default card
   return (
-    <Link to={`/post/${post.slug}`} className="group flex flex-col rounded-xl overflow-hidden bg-card border border-border imperio-card-hover">
-      <div className="relative overflow-hidden aspect-[16/10]">
+    <div className="group flex flex-col rounded-xl overflow-hidden bg-card border border-border imperio-card-hover">
+      <Link to={`/post/${post.slug}`} className="relative overflow-hidden aspect-[16/10]">
         <img
           src={post.coverImage}
           alt={post.title}
@@ -115,15 +132,30 @@ export function PostCard({ post, variant = 'default' }: PostCardProps) {
             Destaque
           </Badge>
         )}
-      </div>
+      </Link>
       <div className="flex flex-col flex-1 p-4">
         {primaryCategory && (
           <span className="text-xs font-medium text-accent mb-1.5">{primaryCategory.name}</span>
         )}
-        <h3 className="font-semibold text-foreground line-clamp-2 group-hover:text-accent transition-colors leading-snug">
-          {post.title}
-        </h3>
+        <Link to={`/post/${post.slug}`}>
+          <h3 className="font-semibold text-foreground line-clamp-2 group-hover:text-accent transition-colors leading-snug">
+            {post.title}
+          </h3>
+        </Link>
         <p className="text-sm text-muted-foreground line-clamp-2 mt-1.5 flex-1">{post.summary}</p>
+        <div className="flex flex-wrap gap-1.5 mt-2">
+          {post.tags.slice(0, 3).map((tagId) => {
+            const tag = getTag(tagId);
+            if (!tag) return null;
+            return (
+              <Link key={tag.id} to={`/tag/${tag.slug}`}>
+                <Badge variant="outline" className="text-[10px] px-1.5 py-0 hover:bg-accent/10 hover:text-accent transition-colors">
+                  {tag.name}
+                </Badge>
+              </Link>
+            );
+          })}
+        </div>
         <div className="flex items-center justify-between mt-3 pt-3 border-t border-border">
           <div className="flex items-center gap-3 text-xs text-muted-foreground">
             <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{post.readingTime} min</span>
@@ -132,6 +164,6 @@ export function PostCard({ post, variant = 'default' }: PostCardProps) {
           <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-accent group-hover:translate-x-1 transition-all" />
         </div>
       </div>
-    </Link>
+    </div>
   );
 }

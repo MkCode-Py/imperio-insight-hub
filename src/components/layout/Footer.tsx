@@ -1,8 +1,15 @@
 import { Link } from 'react-router-dom';
-import { getAllCategories } from '@/lib/blog';
+import { getAllCategories, getAllTags, getPostsByTag } from '@/lib/blog';
 
 export function Footer() {
   const categories = getAllCategories();
+  const allTags = getAllTags();
+  // Show top 8 tags by post count
+  const popularTags = allTags
+    .map((tag) => ({ ...tag, count: getPostsByTag(tag.id).length }))
+    .filter((t) => t.count > 0)
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 8);
 
   return (
     <footer className="border-t border-border bg-card mt-20">
@@ -38,7 +45,7 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Quick Links */}
+          {/* Quick Links + Tags */}
           <div>
             <h4 className="font-semibold text-foreground mb-3 text-sm">Navegação</h4>
             <ul className="space-y-2">
@@ -46,6 +53,22 @@ export function Footer() {
               <li><Link to="/guias" className="text-sm text-muted-foreground hover:text-accent transition-colors">Guias</Link></li>
               <li><Link to="/busca" className="text-sm text-muted-foreground hover:text-accent transition-colors">Buscar</Link></li>
             </ul>
+            {popularTags.length > 0 && (
+              <>
+                <h4 className="font-semibold text-foreground mb-2 mt-5 text-sm">Tags Populares</h4>
+                <div className="flex flex-wrap gap-1.5">
+                  {popularTags.map((tag) => (
+                    <Link
+                      key={tag.id}
+                      to={`/tag/${tag.slug}`}
+                      className="text-xs text-muted-foreground hover:text-accent transition-colors bg-secondary/50 px-2 py-0.5 rounded-full"
+                    >
+                      {tag.name}
+                    </Link>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
 
           {/* Store CTA */}

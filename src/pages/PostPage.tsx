@@ -8,7 +8,7 @@ import { PostContent } from '@/components/blog/PostContent';
 import { ShareWhatsApp } from '@/components/blog/ShareWhatsApp';
 import { RelatedPosts } from '@/components/blog/RelatedPosts';
 import { useViewCounter } from '@/hooks/useViewCounter';
-import { getPostBySlug, getRelatedPosts, getCategory, formatDate, formatViews, getAllPosts } from '@/lib/blog';
+import { getPostBySlug, getRelatedPosts, getCategory, getTag, formatDate, formatViews, getAllPosts } from '@/lib/blog';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 
@@ -61,7 +61,9 @@ const PostPage = () => {
           <div className="mt-4 mb-8">
             <div className="flex flex-wrap gap-2 mb-3">
               {mainCategory && (
-                <Badge className="bg-accent/10 text-accent border-accent/20">{mainCategory.name}</Badge>
+                <Link to={`/categoria/${mainCategory.slug}`}>
+                  <Badge className="bg-accent/10 text-accent border-accent/20 hover:bg-accent/20 transition-colors">{mainCategory.name}</Badge>
+                </Link>
               )}
               <Badge variant="outline" className="text-xs">{post.contentType}</Badge>
               {post.featured && <Badge className="bg-imperio-gold/10 text-imperio-gold border-imperio-gold/20">Destaque</Badge>}
@@ -77,6 +79,21 @@ const PostPage = () => {
               <span className="flex items-center gap-1.5"><Calendar className="h-4 w-4" />{formatDate(post.publishDate)}</span>
               <span className="flex items-center gap-1.5"><Clock className="h-4 w-4" />{post.readingTime} min</span>
               <span className="flex items-center gap-1.5"><Eye className="h-4 w-4" />{formatViews(post.uniqueViews + localViews)}</span>
+            </div>
+
+            {/* Tags */}
+            <div className="flex flex-wrap gap-1.5 mt-4">
+              {post.tags.map((tagId) => {
+                const tag = getTag(tagId);
+                if (!tag) return null;
+                return (
+                  <Link key={tag.id} to={`/tag/${tag.slug}`}>
+                    <Badge variant="outline" className="text-xs hover:bg-accent/10 hover:text-accent transition-colors">
+                      {tag.name}
+                    </Badge>
+                  </Link>
+                );
+              })}
             </div>
 
             <div className="flex items-center gap-2 mt-4">

@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import { useState, useMemo } from 'react';
 import { Search } from 'lucide-react';
 import { Header } from '@/components/layout/Header';
