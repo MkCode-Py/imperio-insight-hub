@@ -10,21 +10,22 @@ const GuidesPage = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <main className="container py-8">
-        <div className="flex items-center gap-2 mb-2">
-          <BookOpen className="h-6 w-6 text-accent" />
+      <main className="container py-10">
+        <p className="section-label mb-2">Conteúdo aprofundado</p>
+        <div className="flex items-center gap-2.5 mb-1">
+          <BookOpen className="h-5 w-5 text-accent" />
           <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground">Guias</h1>
         </div>
-        <p className="text-muted-foreground text-sm mb-8">Conteúdo educacional completo e aprofundado</p>
+        <p className="text-muted-foreground text-sm mb-10">Conteúdo educacional completo e aprofundado</p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {guides.map((post) => (
             <PostCard key={post.id} post={post} />
           ))}
         </div>
 
         {guides.length === 0 && (
-          <p className="text-center text-muted-foreground py-16">Nenhum guia disponível ainda.</p>
+          <p className="text-center text-muted-foreground py-20">Nenhum guia disponível ainda.</p>
         )}
       </main>
       <Footer />

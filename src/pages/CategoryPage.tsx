@@ -35,21 +35,19 @@ const CategoryPage = () => {
     <div className="min-h-screen bg-background">
       <Header />
 
-      {/* Hero */}
-      <div className="relative h-40 sm:h-52 overflow-hidden">
+      <div className="relative h-36 sm:h-48 overflow-hidden">
         <img src={category.coverImage} alt={category.name} className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 container pb-6">
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 container pb-5">
           <Breadcrumbs items={[{ label: category.name }]} />
           <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground mt-2">{category.name}</h1>
           <p className="text-muted-foreground text-sm mt-1 max-w-lg">{category.description}</p>
-          <span className="text-xs text-muted-foreground mt-1">{allPosts.length} {allPosts.length === 1 ? 'post' : 'posts'}</span>
+          <span className="text-xs text-muted-foreground mt-1 block">{allPosts.length} {allPosts.length === 1 ? 'post' : 'posts'}</span>
         </div>
       </div>
 
-      <main className="container py-8">
-        {/* Filters */}
-        <div className="flex flex-wrap gap-2 mb-6">
+      <main className="container py-10">
+        <div className="flex flex-wrap gap-2 mb-8">
           <Badge
             variant={contentTypeFilter === 'all' ? 'default' : 'outline'}
             className="cursor-pointer"
@@ -69,14 +67,14 @@ const CategoryPage = () => {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {posts.map((post) => (
             <PostCard key={post.id} post={post} />
           ))}
         </div>
 
         {posts.length === 0 && (
-          <p className="text-center text-muted-foreground py-12">Nenhum post encontrado nesta categoria.</p>
+          <p className="text-center text-muted-foreground py-16">Nenhum post encontrado nesta categoria.</p>
         )}
       </main>
 
