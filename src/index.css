@@ -128,7 +128,8 @@
   }
 
   .imperio-glass {
-    @apply bg-background/92 backdrop-blur-xl border-b border-border/50;
+    @apply backdrop-blur-xl border-b border-border/50;
+    background-color: hsl(var(--background) / 0.92);
   }
 
   .section-label {
