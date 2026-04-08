@@ -35,7 +35,7 @@ const TagPage = () => {
     <div className="min-h-screen bg-background">
       <Header />
 
-      <div className="container pt-10 pb-4">
+      <div className="container pt-8 sm:pt-10 pb-4">
         <Breadcrumbs items={[{ label: 'Tags' }, { label: tag.name }]} />
         <div className="flex items-center gap-3 mt-5 mb-2">
           <div className="h-9 w-9 rounded-md bg-accent/8 flex items-center justify-center">
@@ -53,7 +53,7 @@ const TagPage = () => {
           <div className="flex flex-wrap gap-2 mb-8">
             <Badge
               variant={categoryFilter === 'all' ? 'default' : 'outline'}
-              className="cursor-pointer"
+              className="cursor-pointer text-xs h-7"
               onClick={() => setCategoryFilter('all')}
             >
               Todos ({allPosts.length})
@@ -65,7 +65,7 @@ const TagPage = () => {
                 <Badge
                   key={catId}
                   variant={categoryFilter === catId ? 'default' : 'outline'}
-                  className="cursor-pointer"
+                  className="cursor-pointer text-xs h-7"
                   onClick={() => setCategoryFilter(catId)}
                 >
                   {cat.name}
@@ -75,7 +75,7 @@ const TagPage = () => {
           </div>
         )}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
           {posts.map((post) => (
             <PostCard key={post.id} post={post} />
           ))}

@@ -8,13 +8,13 @@ interface BreadcrumbItem {
 
 export function Breadcrumbs({ items }: { items: BreadcrumbItem[] }) {
   return (
-    <nav className="flex items-center gap-1 text-sm text-muted-foreground flex-wrap">
+    <nav className="flex items-center gap-1 text-xs text-muted-foreground flex-wrap">
       <Link to="/" className="hover:text-accent transition-colors">
-        <Home className="h-3.5 w-3.5" />
+        <Home className="h-3 w-3" />
       </Link>
       {items.map((item, i) => (
         <span key={i} className="flex items-center gap-1">
-          <ChevronRight className="h-3 w-3" />
+          <ChevronRight className="h-2.5 w-2.5" />
           {item.to ? (
             <Link to={item.to} className="hover:text-accent transition-colors">
               {item.label}

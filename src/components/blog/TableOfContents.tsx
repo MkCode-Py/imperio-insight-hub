@@ -28,14 +28,14 @@ export function TableOfContents({ htmlContent }: { htmlContent: string }) {
   };
 
   return (
-    <div className="p-4 rounded-xl bg-card border border-border">
-      <h4 className="text-sm font-semibold text-foreground mb-3">Neste artigo</h4>
+    <div className="p-4 rounded-lg bg-muted/30 border border-border/40">
+      <h4 className="text-xs font-semibold uppercase tracking-wider text-foreground mb-3">Neste artigo</h4>
       <nav className="space-y-1">
         {headings.map((h) => (
           <button
             key={h.id}
             onClick={() => scrollTo(h.id)}
-            className={`block text-left text-sm text-muted-foreground hover:text-accent transition-colors w-full ${
+            className={`block text-left text-xs text-muted-foreground hover:text-accent transition-colors w-full ${
               h.level === 3 ? 'pl-4' : ''
             }`}
           >
