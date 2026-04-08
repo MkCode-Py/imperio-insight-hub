@@ -46,11 +46,11 @@ const CategoryPage = () => {
         </div>
       </div>
 
-      <main className="container py-10">
+      <main className="container py-8 sm:py-10">
         <div className="flex flex-wrap gap-2 mb-8">
           <Badge
             variant={contentTypeFilter === 'all' ? 'default' : 'outline'}
-            className="cursor-pointer"
+            className="cursor-pointer text-xs h-7"
             onClick={() => setContentTypeFilter('all')}
           >
             Todos ({allPosts.length})
@@ -59,7 +59,7 @@ const CategoryPage = () => {
             <Badge
               key={ct}
               variant={contentTypeFilter === ct ? 'default' : 'outline'}
-              className="cursor-pointer capitalize"
+              className="cursor-pointer capitalize text-xs h-7"
               onClick={() => setContentTypeFilter(ct)}
             >
               {ct}
@@ -67,7 +67,7 @@ const CategoryPage = () => {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
           {posts.map((post) => (
             <PostCard key={post.id} post={post} />
           ))}

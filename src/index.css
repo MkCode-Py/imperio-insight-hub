@@ -124,15 +124,15 @@
   }
 
   .imperio-card-hover {
-    @apply transition-all duration-300 hover:shadow-md hover:-translate-y-0.5;
+    @apply transition-all duration-300 hover:shadow-sm hover:-translate-y-0.5;
   }
 
   .imperio-glass {
-    @apply bg-background/85 backdrop-blur-xl border-b border-border/60;
+    @apply bg-background/92 backdrop-blur-xl border-b border-border/50;
   }
 
   .section-label {
-    @apply text-[11px] font-semibold uppercase tracking-[0.12em] text-accent;
+    @apply text-[10px] font-semibold uppercase tracking-[0.14em] text-accent;
   }
 }
 
@@ -143,21 +143,21 @@
 }
 
 .imperio-prose h2 {
-  @apply text-xl sm:text-2xl font-bold text-foreground mt-12 mb-5 pb-3 border-b border-border/60;
+  @apply text-xl sm:text-2xl font-bold text-foreground mt-14 mb-6 pb-3 border-b border-border/60;
   font-family: "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
 }
 
 .imperio-prose h3 {
-  @apply text-lg font-semibold text-foreground mt-9 mb-3;
+  @apply text-lg font-semibold text-foreground mt-10 mb-4;
   font-family: "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
 }
 
 .imperio-prose p {
-  @apply text-foreground/85 mb-5 leading-[1.8];
+  @apply text-foreground/85 mb-6 leading-[1.8];
 }
 
 .imperio-prose ul, .imperio-prose ol {
-  @apply mb-5 pl-6 space-y-1.5;
+  @apply mb-6 pl-6 space-y-1.5;
 }
 
 .imperio-prose ul {
@@ -169,7 +169,7 @@
 }
 
 .imperio-prose li {
-  @apply text-foreground/85 leading-[1.8];
+  @apply text-foreground/85 leading-[1.75];
 }
 
 .imperio-prose strong {
@@ -201,7 +201,7 @@
 }
 
 .imperio-prose .callout {
-  @apply my-8 p-5 rounded-xl border-l-4;
+  @apply my-8 p-4 rounded-lg border-l-4;
 }
 
 .imperio-prose .callout.info {
@@ -217,7 +217,7 @@
 }
 
 .imperio-prose pre {
-  @apply my-8 p-5 rounded-xl bg-muted overflow-x-auto text-sm;
+  @apply my-8 p-5 rounded-lg bg-muted overflow-x-auto text-sm;
 }
 
 .imperio-prose code {
@@ -233,5 +233,5 @@
 }
 
 .imperio-prose img {
-  @apply rounded-xl my-8 w-full;
+  @apply rounded-lg my-8 w-full;
 }

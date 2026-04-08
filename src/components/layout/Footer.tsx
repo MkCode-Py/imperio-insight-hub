@@ -11,17 +11,17 @@ export function Footer() {
     .slice(0, 8);
 
   return (
-    <footer className="border-t border-border bg-muted/30 mt-20">
-      <div className="container py-14">
+    <footer className="border-t border-border bg-muted/30 mt-16">
+      <div className="container py-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           <div className="space-y-4">
-            <div className="flex items-center gap-2.5">
-              <div className="h-8 w-8 rounded-md imperio-gradient flex items-center justify-center">
-                <span className="text-xs font-black text-primary-foreground">IP</span>
+            <div className="flex items-center gap-2">
+              <div className="h-7 w-7 rounded-md imperio-gradient flex items-center justify-center">
+                <span className="text-[10px] font-black text-primary-foreground">IP</span>
               </div>
               <div>
-                <span className="font-bold text-foreground text-[15px] leading-none">Império</span>
-                <span className="block text-[9px] font-medium text-muted-foreground tracking-[0.15em] uppercase -mt-0.5">Pharma Blog</span>
+                <span className="font-bold text-foreground text-sm leading-none">Império</span>
+                <span className="block text-[8px] font-medium text-muted-foreground tracking-[0.15em] uppercase -mt-0.5">Pharma Blog</span>
               </div>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
@@ -57,7 +57,7 @@ export function Footer() {
                     <Link
                       key={tag.id}
                       to={`/tag/${tag.slug}`}
-                      className="text-xs text-muted-foreground hover:text-foreground transition-colors border border-border/60 px-2 py-0.5 rounded-md"
+                      className="text-[11px] text-muted-foreground hover:text-foreground transition-colors border border-border/60 px-2 py-0.5 rounded-md"
                     >
                       {tag.name}
                     </Link>
@@ -81,7 +81,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-border/60 mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="border-t border-border/60 mt-10 pt-5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs text-muted-foreground">
             © {new Date().getFullYear()} Império Pharma. Todos os direitos reservados.
           </p>
