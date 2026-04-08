@@ -4,7 +4,6 @@ import { getAllCategories, getAllTags, getPostsByTag } from '@/lib/blog';
 export function Footer() {
   const categories = getAllCategories();
   const allTags = getAllTags();
-  // Show top 8 tags by post count
   const popularTags = allTags
     .map((tag) => ({ ...tag, count: getPostsByTag(tag.id).length }))
     .filter((t) => t.count > 0)
@@ -12,32 +11,30 @@ export function Footer() {
     .slice(0, 8);
 
   return (
-    <footer className="border-t border-border bg-card mt-20">
-      <div className="container py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Brand */}
-          <div className="space-y-3">
-            <div className="flex items-center gap-2">
-              <div className="h-9 w-9 rounded-lg imperio-gradient flex items-center justify-center">
-                <span className="text-sm font-black text-primary-foreground">IP</span>
+    <footer className="border-t border-border bg-muted/30 mt-20">
+      <div className="container py-14">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+          <div className="space-y-4">
+            <div className="flex items-center gap-2.5">
+              <div className="h-8 w-8 rounded-md imperio-gradient flex items-center justify-center">
+                <span className="text-xs font-black text-primary-foreground">IP</span>
               </div>
               <div>
-                <span className="font-bold text-foreground text-lg leading-none">Império</span>
-                <span className="block text-[10px] font-medium text-muted-foreground tracking-widest uppercase -mt-0.5">Pharma Blog</span>
+                <span className="font-bold text-foreground text-[15px] leading-none">Império</span>
+                <span className="block text-[9px] font-medium text-muted-foreground tracking-[0.15em] uppercase -mt-0.5">Pharma Blog</span>
               </div>
             </div>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              Conteúdo editorial premium sobre performance, saúde e bem-estar.
+            <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
+              Conteúdo editorial premium sobre performance, saúde e ciência aplicada.
             </p>
           </div>
 
-          {/* Categories */}
           <div>
-            <h4 className="font-semibold text-foreground mb-3 text-sm">Categorias</h4>
-            <ul className="space-y-2">
+            <h4 className="section-label mb-4">Categorias</h4>
+            <ul className="space-y-2.5">
               {categories.map((cat) => (
                 <li key={cat.id}>
-                  <Link to={`/categoria/${cat.slug}`} className="text-sm text-muted-foreground hover:text-accent transition-colors">
+                  <Link to={`/categoria/${cat.slug}`} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                     {cat.name}
                   </Link>
                 </li>
@@ -45,23 +42,22 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Quick Links + Tags */}
           <div>
-            <h4 className="font-semibold text-foreground mb-3 text-sm">Navegação</h4>
-            <ul className="space-y-2">
-              <li><Link to="/mais-vistos" className="text-sm text-muted-foreground hover:text-accent transition-colors">Mais Vistos</Link></li>
-              <li><Link to="/guias" className="text-sm text-muted-foreground hover:text-accent transition-colors">Guias</Link></li>
-              <li><Link to="/busca" className="text-sm text-muted-foreground hover:text-accent transition-colors">Buscar</Link></li>
+            <h4 className="section-label mb-4">Navegação</h4>
+            <ul className="space-y-2.5">
+              <li><Link to="/mais-vistos" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Mais Vistos</Link></li>
+              <li><Link to="/guias" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Guias</Link></li>
+              <li><Link to="/busca" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Buscar</Link></li>
             </ul>
             {popularTags.length > 0 && (
               <>
-                <h4 className="font-semibold text-foreground mb-2 mt-5 text-sm">Tags Populares</h4>
+                <h4 className="section-label mb-3 mt-6">Tags Populares</h4>
                 <div className="flex flex-wrap gap-1.5">
                   {popularTags.map((tag) => (
                     <Link
                       key={tag.id}
                       to={`/tag/${tag.slug}`}
-                      className="text-xs text-muted-foreground hover:text-accent transition-colors bg-secondary/50 px-2 py-0.5 rounded-full"
+                      className="text-xs text-muted-foreground hover:text-foreground transition-colors border border-border/60 px-2 py-0.5 rounded-md"
                     >
                       {tag.name}
                     </Link>
@@ -71,22 +67,21 @@ export function Footer() {
             )}
           </div>
 
-          {/* Store CTA */}
           <div>
-            <h4 className="font-semibold text-foreground mb-3 text-sm">Loja Oficial</h4>
-            <p className="text-sm text-muted-foreground mb-3 leading-relaxed">
+            <h4 className="section-label mb-4">Loja Oficial</h4>
+            <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
               Visite a loja Império Pharma e encontre os melhores produtos.
             </p>
             <a
               href="#loja"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg imperio-gradient text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-md imperio-gradient text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity"
             >
               Visitar Loja
             </a>
           </div>
         </div>
 
-        <div className="border-t border-border mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="border-t border-border/60 mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs text-muted-foreground">
             © {new Date().getFullYear()} Império Pharma. Todos os direitos reservados.
           </p>

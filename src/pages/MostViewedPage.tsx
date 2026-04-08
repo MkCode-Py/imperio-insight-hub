@@ -3,7 +3,6 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { getMostViewedPosts, formatViews, getCategory } from '@/lib/blog';
 import { Link } from 'react-router-dom';
-import { Badge } from '@/components/ui/badge';
 
 const MostViewedPage = () => {
   const posts = getMostViewedPosts(12);
@@ -11,32 +10,33 @@ const MostViewedPage = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <main className="container py-8">
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground mb-2">Mais Vistos</h1>
-        <p className="text-muted-foreground text-sm mb-8">Ranking dos posts mais acessados do blog</p>
+      <main className="container py-10">
+        <p className="section-label mb-2">Ranking</p>
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground mb-1">Mais Vistos</h1>
+        <p className="text-muted-foreground text-sm mb-10">Os posts mais acessados do blog</p>
 
-        <div className="space-y-3">
+        <div className="space-y-2.5">
           {posts.map((post, i) => {
             const cat = post.categories[0] ? getCategory(post.categories[0]) : null;
             return (
               <Link
                 key={post.id}
                 to={`/post/${post.slug}`}
-                className="group flex items-center gap-4 p-4 rounded-xl bg-card border border-border imperio-card-hover"
+                className="group flex items-center gap-4 p-4 rounded-lg bg-card border border-border/50 imperio-card-hover"
               >
-                <span className="text-3xl font-black text-accent/20 w-10 text-center shrink-0">{i + 1}</span>
-                <img src={post.coverImage} alt={post.title} className="w-16 h-16 rounded-lg object-cover shrink-0" loading="lazy" />
+                <span className={`text-2xl font-extrabold w-8 text-center shrink-0 tabular-nums ${i < 3 ? 'text-accent/40' : 'text-border'}`}>
+                  {i + 1}
+                </span>
+                <img src={post.coverImage} alt={post.title} className="w-14 h-14 rounded-md object-cover shrink-0" loading="lazy" />
                 <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2 mb-1">
-                    {cat && <Badge variant="outline" className="text-[10px]">{cat.name}</Badge>}
-                  </div>
-                  <h3 className="text-sm sm:text-base font-semibold text-foreground group-hover:text-accent transition-colors line-clamp-1">
+                  {cat && <span className="section-label">{cat.name}</span>}
+                  <h3 className="text-sm sm:text-base font-semibold text-foreground group-hover:text-accent transition-colors line-clamp-1 mt-0.5">
                     {post.title}
                   </h3>
-                  <p className="text-xs text-muted-foreground line-clamp-1 mt-0.5">{post.summary}</p>
+                  <p className="text-xs text-muted-foreground line-clamp-1 mt-0.5 hidden sm:block">{post.summary}</p>
                 </div>
-                <div className="flex items-center gap-1 text-sm font-medium text-muted-foreground shrink-0">
-                  <Eye className="h-4 w-4" />
+                <div className="flex items-center gap-1.5 text-sm font-medium text-muted-foreground shrink-0">
+                  <Eye className="h-3.5 w-3.5" />
                   {formatViews(post.uniqueViews)}
                 </div>
               </Link>

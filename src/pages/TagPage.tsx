@@ -3,7 +3,7 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Breadcrumbs } from '@/components/blog/Breadcrumbs';
 import { PostCard } from '@/components/blog/PostCard';
-import { getTagBySlug, getPostsByTag, getAllCategories, getCategory } from '@/lib/blog';
+import { getTagBySlug, getPostsByTag, getCategory } from '@/lib/blog';
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -35,11 +35,11 @@ const TagPage = () => {
     <div className="min-h-screen bg-background">
       <Header />
 
-      <div className="container pt-8 pb-4">
+      <div className="container pt-10 pb-4">
         <Breadcrumbs items={[{ label: 'Tags' }, { label: tag.name }]} />
-        <div className="flex items-center gap-3 mt-4 mb-2">
-          <div className="h-10 w-10 rounded-lg bg-accent/10 flex items-center justify-center">
-            <Tag className="h-5 w-5 text-accent" />
+        <div className="flex items-center gap-3 mt-5 mb-2">
+          <div className="h-9 w-9 rounded-md bg-accent/8 flex items-center justify-center">
+            <Tag className="h-4 w-4 text-accent" />
           </div>
           <div>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground">{tag.name}</h1>
@@ -48,9 +48,9 @@ const TagPage = () => {
         </div>
       </div>
 
-      <main className="container py-4">
+      <main className="container py-6">
         {categoriesInPosts.length > 1 && (
-          <div className="flex flex-wrap gap-2 mb-6">
+          <div className="flex flex-wrap gap-2 mb-8">
             <Badge
               variant={categoryFilter === 'all' ? 'default' : 'outline'}
               className="cursor-pointer"
@@ -75,14 +75,14 @@ const TagPage = () => {
           </div>
         )}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {posts.map((post) => (
             <PostCard key={post.id} post={post} />
           ))}
         </div>
 
         {posts.length === 0 && (
-          <p className="text-center text-muted-foreground py-12">Nenhum post encontrado com esta tag.</p>
+          <p className="text-center text-muted-foreground py-16">Nenhum post encontrado com esta tag.</p>
         )}
       </main>
 

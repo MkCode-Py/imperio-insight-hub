@@ -6,7 +6,7 @@ import { Footer } from '@/components/layout/Footer';
 import { PostCard } from '@/components/blog/PostCard';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { searchPosts, getAllPosts, getAllCategories, getCategory } from '@/lib/blog';
+import { searchPosts, getAllPosts, getAllCategories } from '@/lib/blog';
 
 const SearchPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -33,21 +33,22 @@ const SearchPage = () => {
     <div className="min-h-screen bg-background">
       <Header />
 
-      <main className="container py-8">
+      <main className="container py-10">
+        <p className="section-label mb-2">Explorar</p>
         <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground mb-6">Buscar</h1>
 
-        <div className="relative max-w-xl mb-6">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+        <div className="relative max-w-lg mb-8">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             value={query}
             onChange={(e) => handleSearch(e.target.value)}
             placeholder="Buscar posts..."
-            className="pl-10 h-12 text-base"
+            className="pl-11 h-11 text-sm rounded-lg border-border/60"
             autoFocus
           />
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 mb-6">
+        <div className="flex flex-wrap items-center gap-2 mb-8">
           <Badge variant={categoryFilter === 'all' ? 'default' : 'outline'} className="cursor-pointer" onClick={() => setCategoryFilter('all')}>
             Todas
           </Badge>
@@ -56,7 +57,7 @@ const SearchPage = () => {
               {cat.name}
             </Badge>
           ))}
-          <span className="mx-2 text-border">|</span>
+          <span className="mx-1.5 text-border">|</span>
           <Badge variant={sortBy === 'recent' ? 'default' : 'outline'} className="cursor-pointer" onClick={() => setSortBy('recent')}>
             Recentes
           </Badge>
@@ -65,7 +66,7 @@ const SearchPage = () => {
           </Badge>
         </div>
 
-        <p className="text-sm text-muted-foreground mb-4">{results.length} resultado(s)</p>
+        <p className="text-sm text-muted-foreground mb-5">{results.length} resultado(s)</p>
 
         <div className="space-y-3">
           {results.map((post) => (
@@ -74,13 +75,13 @@ const SearchPage = () => {
         </div>
 
         {results.length === 0 && (
-          <div className="text-center py-16">
+          <div className="text-center py-20">
             <p className="text-muted-foreground mb-4">Nenhum resultado encontrado.</p>
-            <p className="text-sm text-muted-foreground mb-4">Tente explorar nossas categorias:</p>
+            <p className="text-sm text-muted-foreground mb-5">Tente explorar nossas categorias:</p>
             <div className="flex flex-wrap justify-center gap-2">
               {categories.map((cat) => (
                 <Link key={cat.id} to={`/categoria/${cat.slug}`}>
-                  <Badge variant="outline" className="cursor-pointer hover:bg-accent/10 hover:text-accent transition-colors">
+                  <Badge variant="outline" className="cursor-pointer hover:bg-accent/8 hover:text-accent transition-colors">
                     {cat.name}
                   </Badge>
                 </Link>
